@@ -40,11 +40,53 @@ export function validateCatalogue(apps: Application[]): void {
     for (const shot of app.screenshots) {
       check(localAsset(shot.src), `${app.slug} screenshot path is invalid`);
       localized(shot.alt, `${app.slug} screenshot alternative`);
+      if (shot.frame !== undefined)
+        check(
+          ['phone', 'desktop', 'browser', 'none'].includes(shot.frame),
+          `${app.slug} screenshot frame is invalid`,
+        );
+      for (const dimension of ['width', 'height'] as const) {
+        const value = shot[dimension];
+        if (value !== undefined)
+          check(
+            Number.isInteger(value) && value > 0,
+            `${app.slug} screenshot ${dimension} must be a positive integer`,
+          );
+      }
     }
     check(app.features.length, `${app.slug} needs documented features`);
     for (const feature of app.features) {
       localized(feature.title, `${app.slug} feature title`);
       localized(feature.description, `${app.slug} feature description`);
+      if (feature.screenshotIndex !== undefined)
+        check(
+          Number.isInteger(feature.screenshotIndex) &&
+            feature.screenshotIndex >= 0 &&
+            feature.screenshotIndex < app.screenshots.length,
+          `${app.slug} feature screenshot index is invalid`,
+        );
+    }
+    if (app.slogan !== undefined) localized(app.slogan, `${app.slug} slogan`);
+    if (app.specifications !== undefined) {
+      check(Array.isArray(app.specifications), `${app.slug} specifications must be an array`);
+      for (const specification of app.specifications) {
+        localized(specification.label, `${app.slug} specification label`);
+        localized(specification.value, `${app.slug} specification value`);
+      }
+    }
+    if (app.presentation !== undefined) {
+      if (app.presentation.tone !== undefined)
+        check(
+          ['light', 'dark', 'navy'].includes(app.presentation.tone),
+          `${app.slug} presentation tone is invalid`,
+        );
+      if (app.presentation.heroScreenshot !== undefined)
+        check(
+          Number.isInteger(app.presentation.heroScreenshot) &&
+            app.presentation.heroScreenshot >= 0 &&
+            app.presentation.heroScreenshot < app.screenshots.length,
+          `${app.slug} hero screenshot index is invalid`,
+        );
     }
     localized(app.license.name, `${app.slug} license`);
     check(

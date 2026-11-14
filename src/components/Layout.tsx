@@ -95,10 +95,8 @@ export function Layout({ children }: { children: ReactNode }) {
             <NavLink to="/applications">{c('Applications', 'Applications')}</NavLink>
             <NavLink to="/downloads">{c('Downloads', 'Téléchargements')}</NavLink>
             <NavLink to="/docs">{c('Documentation', 'Documentation')}</NavLink>
-            <NavLink to="/about">{c('The lab', 'Le laboratoire')}</NavLink>
-            <NavLink to="/support" className="mobile-support">
-              Support
-            </NavLink>
+            <NavLink to="/about">{c('About', 'À propos')}</NavLink>
+            <NavLink to="/support">{c('Support', 'Assistance')}</NavLink>
           </nav>
           <div className="header-tools">
             <button

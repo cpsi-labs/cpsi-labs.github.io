@@ -12,7 +12,7 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
     document.documentElement.lang === 'fr' ? 'fr' : 'en',
   );
   const [theme, setTheme] = useState<Theme>(
-    document.documentElement.dataset.theme === 'light' ? 'light' : 'dark',
+    document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light',
   );
   useEffect(() => {
     document.documentElement.lang = language;
@@ -26,7 +26,7 @@ export function PreferencesProvider({ children }: { children: ReactNode }) {
     document.documentElement.dataset.theme = theme;
     document
       .querySelector('meta[name="theme-color"]')
-      ?.setAttribute('content', theme === 'dark' ? '#080e1c' : '#f7f9fd');
+      ?.setAttribute('content', theme === 'dark' ? '#101114' : '#ffffff');
     try {
       localStorage.setItem('cpsi-theme', theme);
     } catch {

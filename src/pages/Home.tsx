@@ -1,259 +1,181 @@
-import { GithubIcon } from '../components/GithubIcon';
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight, ArrowUpRight, MoveUpRight, ShieldCheck } from 'lucide-react';
-import { useCopy, usePreferences } from '../lib/preferences';
-import { disciplines } from '../data/disciplines';
-import { applications } from '../data/applications';
-import { ConnectSection, EmptyCatalogue } from '../components/Common';
-import { ApplicationCard } from './Applications';
 import { GITHUB } from '../lib/links';
+import { Link } from 'react-router-dom';
+import { Boxes, ChevronRight } from 'lucide-react';
+import { useCopy } from '../lib/preferences';
+import { applications } from '../data/applications';
+import { BrandArtwork } from '../components/BrandArtwork';
+import { Reveal } from '../components/Reveal';
+import { ConnectSection } from '../components/Common';
+import { ApplicationCard } from './Applications';
 export function Home() {
   const c = useCopy();
-  const { language } = usePreferences();
-  const [selected, setSelected] = useState(0);
-  const active = disciplines[selected];
-  const Icon = active.icon;
   return (
-    <>
-      <section className="hero container">
-        <div className="hero-copy">
-          <h1>
-            <span>Build.</span>
-            <span>Innovate.</span>
-            <span className="accent">Evolve.</span>
-          </h1>
-          <p className="hero-description">
-            {c('Independent thinking.', 'Penser librement.')}
-            <br />
-            <strong>{c('Purposeful software.', 'Développer avec sens.')}</strong>
-          </p>
-          <p className="hero-detail">
+    <div className="showcase-home">
+      <section className="brand-showcase" aria-labelledby="brand-title">
+        <div className="showcase-copy">
+          <h1 id="brand-title">CPSI LABS</h1>
+          <p className="brand-tagline">Build. Innovate. Evolve.</p>
+          <p className="brand-vision">
             {c(
-              'We’re CPSI LABS. An independent software lab turning ideas into useful digital experiences.',
-              'Nous sommes CPSI LABS. Un laboratoire logiciel indépendant qui transforme les idées en expériences numériques utiles.',
+              'Independent ideas. Software with purpose.',
+              'Des idées libres. Des logiciels qui ont du sens.',
             )}
           </p>
-          <div className="hero-actions">
+          <div className="showcase-actions">
             <Link to="/applications" className="button primary">
-              {c('Explore applications', 'Explorer les applications')}
-              <ArrowRight size={17} />
+              {c('Discover our applications', 'Découvrir nos applications')}
             </Link>
-            <a href={GITHUB} className="hero-github">
-              <GithubIcon size={18} />
-              <span>GitHub</span>
-              <ArrowUpRight size={14} />
-            </a>
+            <Link to="/about" className="button outline">
+              {c('Learn more', 'En savoir plus')}
+            </Link>
           </div>
         </div>
-        <div
-          className="hero-art"
-          role="img"
-          aria-label={c(
-            'The original CPSI LABS CS symbol at the centre of connected orbits',
-            'Le véritable symbole CS de CPSI LABS au centre d’orbites reliées',
-          )}
-        >
-          <div className="orbit orbit-one" />
-          <div className="orbit orbit-two" />
-          <div className="orbit orbit-three" />
-          <div className="art-axis axis-x" />
-          <div className="art-axis axis-y" />
-          <span className="orbit-node node-one" />
-          <span className="orbit-node node-two" />
-          <span className="orbit-node node-three" />
-          <div className="symbol-disc">
-            <img src="/brand/symbol.webp" alt="" width="400" height="288" fetchPriority="high" />
-          </div>
-          <div className="art-coordinate coordinate-one">
-            <span />
-            {c('Ideas into interfaces', 'Des idées aux interfaces')}
-          </div>
-          <div className="art-coordinate coordinate-two">
-            <span />
-            {c('Designed to connect', 'Conçu pour relier')}
-          </div>
-          <div className="art-caption">
-            CPSI LABS <span> / </span>
-            {c('Independent by design', 'Indépendant par choix')}
-          </div>
-        </div>
+        <BrandArtwork kind="monogram" />
       </section>
-      <div className="platform-band">
-        <div className="container">
-          <span>{c('Built beyond boundaries.', 'Au-delà des plateformes.')}</span>
-          <div>
-            <span>Android</span>
-            <i />
-            <span>Linux</span>
-            <i />
-            <span>Windows</span>
-            <i />
-            <span>Web</span>
-            <i />
-            <span>API</span>
+      <section className="software-showcase section-navy">
+        <Reveal>
+          <div className="showcase-copy">
+            <h2>{c('A world of possibilities.', 'Un monde de possibilités.')}</h2>
+            <p className="showcase-subtitle">
+              {c('Across platforms. Around you.', 'Plusieurs plateformes. Vous au centre.')}
+            </p>
+            <p>
+              {c(
+                'Mobile, desktop and web. Different ways to make the everyday feel simpler.',
+                'Mobile, desktop et web. Autant de façons de simplifier le quotidien.',
+              )}
+            </p>
+            <Link to="/about" className="text-link">
+              {c('Explore our approach', 'Découvrir notre approche')}
+              <ChevronRight size={18} />
+            </Link>
           </div>
-        </div>
-      </div>
-      <section className="expertise-section container">
-        <div className="section-intro">
-          <h2>
-            {c('Different platforms.', 'Plusieurs plateformes.')}
-            <br />
-            <span className="muted">{c('One way of thinking.', 'Une même exigence.')}</span>
-          </h2>
-          <p>
-            {c(
-              'From the device in your hand to the systems behind it. We explore software wherever there’s a useful problem to solve.',
-              'De l’appareil dans votre main aux systèmes qui le font fonctionner. Nous explorons le logiciel là où un problème mérite une solution.',
-            )}
-          </p>
-        </div>
-        <div className="expertise-layout">
-          <div
-            className="discipline-list"
-            role="tablist"
-            aria-label={c('Our expertise', 'Nos expertises')}
-            aria-orientation="vertical"
-          >
-            {disciplines.map((d, i) => (
-              <button
-                key={d.id}
-                role="tab"
-                id={`tab-${d.id}`}
-                aria-controls="discipline-panel"
-                aria-selected={selected === i}
-                tabIndex={selected === i ? 0 : -1}
-                onClick={() => setSelected(i)}
-                onKeyDown={(event) => {
-                  let next = i;
-                  if (event.key === 'ArrowDown') next = (i + 1) % disciplines.length;
-                  else if (event.key === 'ArrowUp')
-                    next = (i - 1 + disciplines.length) % disciplines.length;
-                  else if (event.key === 'Home') next = 0;
-                  else if (event.key === 'End') next = disciplines.length - 1;
-                  else return;
-                  event.preventDefault();
-                  setSelected(next);
-                  document.getElementById(`tab-${disciplines[next].id}`)?.focus();
-                }}
-              >
-                <d.icon size={20} strokeWidth={1.6} />
-                <span>{language === 'en' ? d.en : d.fr}</span>
-                <MoveUpRight size={16} />
-              </button>
-            ))}
-          </div>
-          <div
-            className="discipline-panel"
-            role="tabpanel"
-            id="discipline-panel"
-            aria-labelledby={`tab-${active.id}`}
-            tabIndex={0}
-          >
-            <div className={`discipline-art art-${active.id}`} aria-hidden="true">
-              <div className="diagram-orbit" />
-              <div className="diagram-orbit second" />
-              <span className="diagram-core">
-                <Icon size={51} strokeWidth={1.2} />
-              </span>
-              <span className="diagram-end end-a" />
-              <span className="diagram-end end-b" />
-              <span className="diagram-end end-c" />
-              <span className="diagram-end end-d" />
-            </div>
-            <div className="discipline-copy" key={active.id}>
-              <h3>{language === 'en' ? active.en : active.fr}</h3>
-              <p>{language === 'en' ? active.enText : active.frText}</p>
-              <div className="tags">
-                {(language === 'en' ? active.tags : active.frTags).map((t) => (
-                  <span key={t}>{t}</span>
-                ))}
-              </div>
-            </div>
-          </div>
-        </div>
+          <BrandArtwork kind="platforms" />
+        </Reveal>
       </section>
-      <section className="featured-section">
-        <div className="container">
-          <div className="section-intro">
-            <div>
-              <h2>{c('Made here. Coming soon.', 'Imaginé ici. Bientôt disponible.')}</h2>
+      <div className="showcase-pair">
+        <section className="value-showcase privacy-showcase">
+          <Reveal>
+            <div className="showcase-copy">
+              <h2>{c('Privacy.\nBy intention.', 'La confidentialité.\nPar choix.')}</h2>
               <p>
                 {c(
-                  'Our applications, all in one place. Official releases, clear documentation and a direct line to the source.',
-                  'Toutes nos applications au même endroit. Versions officielles, documentation claire et accès direct aux sources de publication.',
+                  'Good software starts with respect.\nFor your choices. And your data.',
+                  'Un bon logiciel commence par le respect.\nDe vos choix. Et de vos données.',
                 )}
               </p>
+              <Link to="/legal" className="text-link">
+                {c('Our privacy principles', 'Nos principes de confidentialité')}
+                <ChevronRight size={17} />
+              </Link>
             </div>
-            <Link className="text-link" to="/applications">
-              {c('View the catalogue', 'Voir le catalogue')}
-              <ArrowRight size={16} />
+            <BrandArtwork kind="privacy" />
+          </Reveal>
+        </section>
+        <section className="value-showcase precision-showcase">
+          <Reveal>
+            <div className="showcase-copy">
+              <h2>
+                {c(
+                  'Less friction.\nMore possibility.',
+                  'Moins de friction.\nPlus de possibilités.',
+                )}
+              </h2>
+              <p>
+                {c(
+                  'Clarity in the interface. Care in the code.\nPerformance as a design goal.',
+                  'La clarté dans l’interface. Le soin dans le code.\nLa performance comme objectif.',
+                )}
+              </p>
+              <Link to="/about" className="text-link">
+                {c('How we build', 'Notre façon de concevoir')}
+                <ChevronRight size={17} />
+              </Link>
+            </div>
+            <BrandArtwork kind="precision" />
+          </Reveal>
+        </section>
+      </div>
+      <section className="catalogue-showcase">
+        <div className="container">
+          <div className="showcase-copy">
+            <h2>{c('The next chapter\nis taking shape.', 'La suite\nprend forme.')}</h2>
+            <p>
+              {c(
+                'Our first applications are in preparation.\nA considered beginning. Room to evolve.',
+                'Nos premières applications sont en préparation.\nDes débuts réfléchis. Et l’envie d’évoluer.',
+              )}
+            </p>
+            <Link to="/applications" className="text-link">
+              {c('Explore the catalogue', 'Explorer le catalogue')}
+              <ChevronRight size={18} />
             </Link>
           </div>
           {applications.length ? (
             <div className="application-grid">
-              {applications.slice(0, 3).map((app) => (
+              {applications.slice(0, 2).map((app) => (
                 <ApplicationCard key={app.slug} app={app} />
               ))}
             </div>
           ) : (
-            <EmptyCatalogue />
+            <div className="catalogue-coming-soon">
+              <Boxes size={36} strokeWidth={1.25} aria-hidden="true" />
+              <a className="text-link" href={GITHUB}>
+                {c(
+                  'Follow the first releases on GitHub',
+                  'Suivre les premières publications sur GitHub',
+                )}
+                <ChevronRight size={17} />
+              </a>
+            </div>
           )}
         </div>
       </section>
-      <section className="approach-section container">
-        <div className="approach-statement">
-          <h2>
-            {c('Small details.', 'Le sens du détail.')}
-            <br />
-            {c('Lasting purpose.', 'L’envie de durer.')}
-          </h2>
-          <Link to="/about" className="text-link">
-            {c('Get to know the lab', 'Découvrir le laboratoire')}
-            <ArrowRight size={16} />
-          </Link>
-        </div>
-        <div className="principles">
-          <article>
-            <span className="principle-marker" />
+      <section className="possibilities-showcase section-black">
+        <Reveal>
+          <div className="container possibilities-layout">
             <div>
-              <h3>{c('Useful from the start', 'Utile dès le départ')}</h3>
+              <h2>{c('Beyond the interface.', 'Au-delà de l’interface.')}</h2>
               <p>
                 {c(
-                  'Start with a real problem. Build only what helps. Refine what matters.',
-                  'Partir d’un problème réel. Construire ce qui aide. Affiner ce qui compte.',
+                  'The details you notice.\nThe foundations you don’t.',
+                  'Les détails que vous voyez.\nLes fondations qui vous échappent.',
                 )}
               </p>
             </div>
-          </article>
-          <article>
-            <span className="principle-marker" />
-            <div>
-              <h3>{c('Care in every layer', 'Du soin à chaque niveau')}</h3>
-              <p>
-                {c(
-                  'Clear interfaces, considered architecture and an attention to the details you feel.',
-                  'Des interfaces claires, une architecture réfléchie et ces détails qui font la différence.',
-                )}
-              </p>
+            <div className="possibility-list">
+              <article>
+                <h3>{c('Networks & systems', 'Réseaux et systèmes')}</h3>
+                <p>
+                  {c(
+                    'Understand what connects. Make complex environments more approachable.',
+                    'Comprendre ce qui relie. Rendre les environnements complexes plus accessibles.',
+                  )}
+                </p>
+              </article>
+              <article>
+                <h3>{c('Web & APIs', 'Web et API')}</h3>
+                <p>
+                  {c(
+                    'Clear experiences, connected through thoughtful architecture.',
+                    'Des expériences claires, reliées par une architecture réfléchie.',
+                  )}
+                </p>
+              </article>
+              <article>
+                <h3>{c('Automation', 'Automatisation')}</h3>
+                <p>
+                  {c(
+                    'Less repetition. More space for the work that matters.',
+                    'Moins de répétitions. Plus de place pour le travail qui compte.',
+                  )}
+                </p>
+              </article>
             </div>
-          </article>
-          <article>
-            <ShieldCheck size={21} />
-            <div>
-              <h3>{c('Privacy is a principle', 'La confidentialité comme principe')}</h3>
-              <p>
-                {c(
-                  'Respect for your data starts with the choices we make before the first line of code.',
-                  'Le respect des données commence par les choix qui précèdent la première ligne de code.',
-                )}
-              </p>
-            </div>
-          </article>
-        </div>
+          </div>
+        </Reveal>
       </section>
       <ConnectSection />
-    </>
+    </div>
   );
 }

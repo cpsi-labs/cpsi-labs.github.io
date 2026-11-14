@@ -1,6 +1,6 @@
 # CPSI LABS — Official website
 
-Official, bilingual software publishing website. **English by default**, complete French copy, persistent light/dark themes. Built with React, TypeScript, Vite, Tailwind CSS, Manrope and Lucide. No backend, user account, contact form, analytics or external font requests.
+Official, bilingual software publishing website. **English and light theme by default**, complete French copy, persistent light/dark themes. Existing explicit theme preferences are preserved. Built with React, TypeScript, Vite, Tailwind CSS, Manrope and Lucide. No backend, user account, contact form, analytics or external font requests.
 
 ## Develop and build
 
@@ -24,7 +24,11 @@ Production output: `dist/`. The build checks TypeScript and validates the catalo
 - `src/data/disciplines.ts`: bilingual technical disciplines.
 - `src/lib/preferences.tsx`: language/theme state with safe local storage fallback.
 - `src/lib/links.ts`: official GitHub namespace and local asset guards.
-- `src/styles.css`: responsive design tokens, complete light/dark themes, reduced-motion support.
+- `src/styles.css`: shared tokens, navigation, reading layouts and complete light/dark themes.
+- `src/styles/showcase.css`: full-width brand showcases, product presentations and responsive media frames.
+- `src/components/ProductMedia.tsx`: real catalogue screenshots in explicit phone/desktop/browser frames, without cropping.
+- `src/components/Reveal.tsx`: finite scroll entrances, disabled and cancelled for reduced motion.
+- `scripts/validate-assets.ts`: build-time check that referenced catalogue images exist.
 - `public/brand/`: optimized owner-supplied CS mark, icons and social card. Original colors preserved. Provenance embedded or in adjacent sidecar.
 - `PRODUCT.md`, `DESIGN.md`, `.impeccable/`: product and design guidance for future changes; not included in the production bundle.
 
@@ -50,7 +54,7 @@ Install Playwright's Chromium once with `npx playwright install chromium`, or us
 PLAYWRIGHT_CHROME_PATH=/usr/bin/google-chrome npm test
 ```
 
-To test a production preview or the deployed site, set `TEST_BASE_URL`. Playwright starts and stops its own local Vite server. The tests cover all routes in both languages and themes, 360/390/768/1024/1440 px layouts, preference persistence and blocked storage, catalogue filters, menu keyboard/focus handling, documentation, reduced motion, URL validation, catalogue validation, and axe WCAG checks. Captures are written outside the repository to `/tmp/cpsi-review/` (Linux); test artifacts are ignored by Git.
+To test a production preview or the deployed site, set `TEST_BASE_URL`. Playwright starts and stops its own local Vite server. The tests cover all routes in both languages and themes, 360/390/768/1024/1440 px layouts, preference persistence and blocked storage, catalogue filters, menu keyboard/focus handling, documentation, reduced motion, URL validation, catalogue validation, and axe WCAG checks. Captures are written outside the repository to `/tmp/cpsi-redesign-review/` (Linux); test artifacts are ignored by Git.
 
 ## Deployment
 

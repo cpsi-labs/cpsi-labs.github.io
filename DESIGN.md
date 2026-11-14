@@ -1,209 +1,163 @@
 ---
 name: CPSI LABS
-description: Independent software publishing with a precise, premium technical identity.
+description: Independent software publishing, presented through focused product showcases.
 colors:
-  navy: "#080e1c"
-  surface: "#0c1425"
-  raised: "#101c30"
-  text: "#f2f5fc"
-  muted: "#9eaac0"
-  subtle: "#7586a2"
-  line: "#253147"
-  accent: "#5291ff"
-  action: "#0660f5"
-  action-hover: "#2878ff"
-  soft: "#142648"
-  hero-lines: "#263d63"
-  light-bg: "#f7f9fd"
-  light-surface: "#eef3fb"
+  light-bg: "#ffffff"
+  light-surface: "#f5f5f7"
   light-raised: "#ffffff"
-  light-text: "#10213c"
-  light-muted: "#52627b"
-  light-subtle: "#566984"
-  light-line: "#d4dfed"
-  light-accent: "#0058dd"
-  light-action: "#065ee9"
-  light-action-hover: "#004abd"
-  light-soft: "#e4edff"
-  light-hero-lines: "#c4d4eb"
+  light-text: "#1d1d1f"
+  light-muted: "#626269"
+  light-subtle: "#68686f"
+  light-line: "#dcdce1"
+  light-accent: "#005bd3"
+  light-action: "#0063ed"
+  light-action-hover: "#0054ca"
+  light-soft: "#edf3fc"
+  light-header: "#ffffffd9"
+  dark-bg: "#101114"
+  dark-surface: "#191a1e"
+  dark-raised: "#222329"
+  dark-text: "#f5f5f7"
+  dark-muted: "#adaeb7"
+  dark-subtle: "#a1a3ae"
+  dark-line: "#35363e"
+  dark-accent: "#74aaff"
+  dark-action: "#0867ed"
+  dark-action-hover: "#247cff"
+  dark-soft: "#1b2a41"
+  dark-header: "#101114dc"
+  showcase-navy: "#071a38"
+  showcase-black: "#08090c"
+  precision-black: "#0a0c11"
+  showcase-blue: "#7cb2ff"
+  showcase-navy-text: "#f5f7fc"
+  showcase-navy-muted: "#b1bdd1"
+  showcase-navy-line: "#2d405e"
+  showcase-black-text: "#f5f5f7"
+  showcase-black-muted: "#acafb8"
+  showcase-black-line: "#34353b"
 typography:
   display:
     fontFamily: "Manrope, sans-serif"
-    fontSize: "clamp(68px, 7.8vw, 96px)"
+    fontSize: "clamp(56px, 6.4vw, 88px)"
     fontWeight: 600
-    lineHeight: 1.04
+    lineHeight: 1.06
     letterSpacing: "-0.04em"
   headline:
     fontFamily: "Manrope, sans-serif"
-    fontSize: "clamp(40px, 5.2vw, 65px)"
+    fontSize: "clamp(40px, 5vw, 64px)"
     fontWeight: 600
-    lineHeight: 1.18
+    lineHeight: 1.1
     letterSpacing: "-0.035em"
   title:
     fontFamily: "Manrope, sans-serif"
-    fontSize: "clamp(28px, 3vw, 40px)"
+    fontSize: "clamp(32px, 4vw, 52px)"
     fontWeight: 600
-    lineHeight: 1.18
+    lineHeight: 1.1
     letterSpacing: "-0.035em"
   body:
     fontFamily: "Manrope, sans-serif"
-    fontSize: "14px"
+    fontSize: "16px"
     fontWeight: 400
-    lineHeight: 1.75
+    lineHeight: 1.65
   label:
     fontFamily: "Manrope, sans-serif"
-    fontSize: "10px"
-    fontWeight: 600
+    fontSize: "11px"
+    fontWeight: 500
     lineHeight: 1.5
-    letterSpacing: "0.09em"
 rounded:
-  xs: "4px"
-  sm: "6px"
-  button: "7px"
-  md: "8px"
-  lg: "12px"
+  control: "30px"
+  card: "16px"
+  compact: "12px"
+  small: "8px"
 spacing:
   xs: "8px"
   sm: "12px"
   md: "16px"
   lg: "24px"
   xl: "40px"
+  section: "90px"
 components:
   button-primary:
-    backgroundColor: "{colors.action}"
+    backgroundColor: "{colors.light-action}"
     textColor: "#ffffff"
-    rounded: "{rounded.button}"
-    padding: "12px 20px"
-    height: "48px"
+    rounded: "{rounded.control}"
+    padding: "12px 23px"
+    height: "46px"
   button-primary-hover:
-    backgroundColor: "{colors.action-hover}"
+    backgroundColor: "{colors.light-action-hover}"
     textColor: "#ffffff"
-    rounded: "{rounded.button}"
+    rounded: "{rounded.control}"
   button-secondary:
-    backgroundColor: "{colors.raised}"
-    textColor: "{colors.text}"
-    rounded: "{rounded.button}"
-    padding: "12px 20px"
-    height: "48px"
+    backgroundColor: "transparent"
+    textColor: "{colors.light-accent}"
+    rounded: "{rounded.control}"
+    padding: "12px 23px"
+    height: "46px"
   card:
-    backgroundColor: "{colors.surface}"
-    textColor: "{colors.text}"
-    rounded: "{rounded.lg}"
+    backgroundColor: "{colors.light-surface}"
+    textColor: "{colors.light-text}"
+    rounded: "{rounded.card}"
 ---
-
-# Design System: CPSI LABS
 
 ## Overview
 
-**Creative North Star: "The Independent Systems Atelier"**
-
-CPSI LABS presents an independent software lab through the confidence of a considered technical publisher. The actual interlocking CS mark is the identity's hero artifact; orbital linework echoes its connected geometry. Wide, direct typography and precise hairlines give the work presence while quiet surfaces keep the content in focus.
-
-The system supports an honest catalogue, technical documentation, company information, support, and legal content across English and French. Dark navy is the primary environment; a pale blue-white light theme carries the same hierarchy and electric-blue identity. Components stay familiar and restrained, while page sections vary their composition to suit their content. English is the default language, and both themes are first-class.
-
-**Key Characteristics:**
-- Premium independent technology publisher, centered on the real CS symbol.
-- Deep navy, electric blue, cool whites, and disciplined hairlines.
-- Broad Manrope typography, calm surfaces, and varied section compositions.
-- Responsive bilingual experience with dark and light themes.
-- Motion is finite and purposeful; reduced-motion preferences are honored.
+CPSI LABS is an independent software publisher. Present the brand and its real software disciplines with the clarity and restraint of a premium product showcase. Lead with the genuine, original CS monogram, a centered “CPSI LABS” title, the exact slogan “Build. Innovate. Evolve.”, one concise vision statement, and two direct actions. The first viewport stays open and white by default; the large dark navy and blue monogram is the focal artwork. Follow with alternating white, pale gray, black, and navy full-width bands. Product benefits and understandable explanations come before technical detail. Use real product media only when the catalogue supplies it. The light/dark preference and English default are existing user choices and remain respected; French is complete. Do not publish personal identity or contact details. GitHub is the official communication channel.
 
 ## Colors
 
-The palette moves from deep blue-black and cool white to a clear, electric blue used for identity emphasis and actions.
-
-### Primary
-- **Electric Blue** (`#5291ff` dark / `#0058dd` light): Accent text, selected states, orbital nodes, and identity details. Use the theme-specific value so contrast remains legible.
-- **Action Blue** (`#0660f5` dark / `#065ee9` light): Primary calls to action; hover shifts to `#2878ff` dark and `#004abd` light.
-
-### Neutral
-- **Night Navy** (`#080e1c`): Main dark canvas and dark header tint.
-- **Deep Surface** (`#0c1425`): Dark cards and structural bands.
-- **Raised Navy** (`#101c30`): Dark raised controls and secondary buttons.
-- **Cool White** (`#f2f5fc`): Dark-theme primary text.
-- **Muted Blue Gray** (`#9eaac0`): Supporting copy in dark mode.
-- **Subtle Blue Gray** (`#7586a2`): Tertiary labels and quiet metadata in dark mode.
-- **Navy Hairline** (`#253147`): Dark-mode dividers and borders.
-- **Pale Blue White** (`#f7f9fd`): Light-theme canvas and header tint.
-- **Light Surface** (`#eef3fb`) and **White Raised Surface** (`#ffffff`): Light cards and elevated areas.
-- **Ink Navy** (`#10213c`): Light-theme primary text.
-- **Muted Slate** (`#52627b`) and **Subtle Slate** (`#566984`): Supporting and tertiary light-theme text.
-- **Pale Divider** (`#d4dfed`): Light-mode borders and dividers.
-
-**The Theme-Paired Accent Rule.** Use the dark or light accent/action values with their corresponding theme; do not carry dark-theme blue onto light surfaces when the light token is defined.
+The default canvas is white, with pale gray for quiet grouping and true black or navy for deliberate showcase interludes. Blue marks actions, links, and selected states. The CSS custom properties in `src/styles.css` are the source of truth for light and dark themes; full-width showcase sections also define their own text and line colors in `src/styles/showcase.css`. Keep text readable on each section surface and preserve the explicit theme preference. The translucent header uses the matching `--header` token with saturation and blur. No orbital or neon visual language.
 
 ## Typography
 
-**Display Font:** Manrope (sans-serif fallback; self-hosted through bundled `@fontsource/manrope` weights 400, 500, 600, and 700)
-**Body Font:** Manrope (sans-serif fallback; self-hosted through bundled `@fontsource/manrope` weights 400, 500, 600, and 700)
-**Label/Mono Font:** Manrope; code samples use the platform monospace stack.
-
-**Character:** Manrope is broad, clean, and contemporary, with tight tracking on display and headline text. Body copy remains open and readable; small uppercase labels are reserved for compact metadata and section cues.
-
-### Hierarchy
-- **Display** (600, `clamp(68px, 7.8vw, 96px)`, 1.04, `-0.04em`): The home hero's three-part slogan; scales down at tablet and mobile widths.
-- **Headline** (600, `clamp(40px, 5.2vw, 65px)`, 1.18, `-0.035em`): Page-level headings.
-- **Title** (600, `clamp(28px, 3vw, 40px)`, 1.18, `-0.035em`): Section headings. Card `h3` titles are `19px`, weight 600, line-height 1.18, and `-0.02em` tracking.
-- **Body** (400, `14px`, 1.75): Default text; documentation paragraphs use `15px` with `1.95` line-height for sustained reading.
-- **Label** (600, `10px`, 1.5, `0.09em`): Small uppercase metadata and technical annotations.
+Use Manrope, self-hosted locally in weights 400, 500, 600, and 700, with `sans-serif` fallback. Never load or imitate proprietary system typography. Headings use weight 600, tight negative tracking, and balanced wrapping. Body copy uses 16px / 1.65 by default; showcase copy varies by role, including a 30px medium brand slogan and 17px vision text. Buttons are 14px / 500. Navigation is compact, while explanatory copy stays comfortably readable. Code may use the platform monospace stack.
 
 ## Layout
 
-The desktop content container is capped at `1200px` and uses `calc(100% - 96px)` gutters. At `1100px` gutters become `64px`, at `850px` `48px`, and at `600px` `40px`; the page remains usable down to `320px`. Compose sections with a varied editorial rhythm: asymmetric hero, discipline selector beside its illustration, split principles, and simpler stacked reading layouts. At `850px`, navigation becomes a menu and multi-column areas begin to collapse; at `600px`, the hero, documentation, support, and editorial layouts become single-column. Preserve generous section spacing on desktop and tighten it deliberately on smaller screens.
+The shared content container is `min(1120px, calc(100% - 80px))`. Keep showcase sections spacious, centered, and full width; the brand hero has an 850px minimum height on desktop with a 490px monogram stage. The sticky translucent desktop navigation is 52px tall. Preserve the responsive breakpoints at 1100px, 850px, and 600px; at the narrow breakpoint the navigation is 54px and mobile preference controls have a 56px minimum touch height. Content must remain usable down to 320px. The home story introduces the lab, software across platforms, privacy and precision, then the genuine catalogue and useful links. Explanatory product copy and benefits precede implementation specifics. Never invent product screens, metrics, users, customer marks, or testimonials; an empty catalogue is stated honestly.
 
 ## Elevation & Depth
 
-Depth combines quiet tonal layering, hairline borders, and a small set of ambient shadows. The token shadow is `0 24px 55px #00000025` in dark mode and `0 24px 55px #13376712` in light mode. Use it for floating or emphasized surfaces; controls and cards generally rely on surface contrast and borders. The hero illustration adds its own restrained radial highlight and orbit geometry.
+Use the theme shadow token (`--shadow`) for restrained depth. Most layout divisions come from large color bands and hairline borders, not floating cards. The genuine hero monogram may use the implemented subtle drop shadow and ground shadow. The monogram entrance is finite and honors reduced motion. Reveal content uses a finite 700ms upward movement only when motion is allowed and observation is available. The header uses `backdrop-filter: saturate(160%) blur(18px)`.
 
 ## Shapes
 
-The shape language is controlled and mostly rounded: shared surfaces use `12px`, primary buttons `7px`, icon buttons and compact chips `6px`, and small code or metadata elements `4px`. Borders are usually one-pixel hairlines. Clip diagrams and image treatments to their intended geometry; reserve circular silhouettes for the CS mark and orbital nodes.
+Actions are capsule-shaped (`30px`); major cards use `16px`, compact surfaces `12px`, and small controls `8px`. Use thin borders and clean alignment. The CS symbol is the only primary brand artwork in the hero. Keep its frame and geometry rectilinear and aligned; do not add ellipses, orbit paths, orbiting nodes, or invented technical ornament. ProductMedia uses its actual `phone`, `browser`, `desktop`, or `none` framing from catalogue data.
 
 ## Components
 
-### Buttons
-- **Character:** Direct, compact actions with clear contrast and restrained state changes.
-- **Shape:** `7px` radius; minimum height `48px`; padding `12px 20px`.
-- **Primary:** Action blue background, white text, Manrope `13px`/`600`; subtle blue shadow. Hover uses the theme's action-hover blue and a slightly stronger shadow.
-- **Secondary:** Raised surface, one-pixel line border, primary text; hover shifts border and text to the theme accent.
-- **Focus:** A visible `2px` accent outline with `5px` offset is applied to focused interactive elements.
+### Actions
 
-### Chips
-- **Style:** Catalogue filters use `8px 13px` padding, `12px` text, `6px` corners, and a transparent one-pixel border at rest.
-- **State:** Selected filters use the soft theme surface and line border with accent text; hover uses the surface and primary text. Focus has the shared `2px` accent outline with `5px` offset.
-
-### Cards / Containers
-- **Corner Style:** `12px` for major content cards and panels; compact elements may use `6px` or `8px`.
-- **Background:** Use surface/raised theme layers with a hairline border where the layout needs separation.
-- **Shadow Strategy:** Ambient shadow is reserved for floating or emphasized elements; most cards stay flat.
-- **Internal Padding:** Application cards use `25px` padding, reduced for tighter mobile layouts.
-
-### Inputs / Fields
-- **Style:** Inherit Manrope; use the theme surface, line border, and compact rounded corners.
-- **Focus:** Shift border to accent and retain the visible `2px` focus outline.
-- **Disabled:** Use subdued theme text and the default cursor; preserve contrast sufficient to identify the control.
+Primary actions use the theme’s `--action` fill, white text, a capsule radius, 12px 23px padding, and 46px minimum height. Hover uses `--action-hover`. Secondary actions are transparent with a one-pixel accent border and accent text. Preserve visible keyboard focus styling and clear action labels.
 
 ### Navigation
-- **Style:** A restrained horizontal header with compact Manrope labels, subtle separators, and direct routes to catalogue, downloads, resources, and preferences.
-- **States:** Hover and current states use the theme accent; focus remains visibly outlined.
-- **Mobile:** At `850px`, the links move into a collapsible vertical menu beneath the `72px` header; at `600px`, the header is `68px` tall.
 
-### Orbital CS Hero
-Use the supplied, genuine CS mark as the centerpiece in an asymmetric orbit composition. Thin elliptical paths, measured coordinate annotations, and restrained accent nodes support the mark rather than replacing it. The entrance is finite; honor reduced-motion settings.
+The sticky header is 52px on desktop, translucent, and blurred. Keep links compact, evenly spaced, and easy to scan. At mobile widths, collapse navigation access while preserving language and theme preferences; the mobile header is 54px, with preference controls at a 56px minimum touch height.
+
+### Showcase sections
+
+Use broad, contrasting white, pale gray, black, and navy sections with one genuine focal visual and a concise explanation. Pair privacy and precision as contrasting compositions where the content supports it. The initial hero centers the real CS monogram, brand name, exact slogan, vision, and two actions. Artwork uses a clean rectangular blue frame with deliberate alignment and no orbit motif.
+
+### Product media
+
+`ProductMedia` renders only catalogue-provided local screenshots and alt text, with the declared frame type. Explain the user benefit before platform and implementation details. Do not fabricate media for unreleased products.
 
 ## Do's and Don'ts
 
 ### Do
-- **Do** use the supplied, real CS symbol as the identity mark and preserve its proportions.
-- **Do** pair theme-specific colors and maintain readable contrast in both themes.
-- **Do** use Manrope and the observed display, headline, title, body, and label hierarchy.
-- **Do** vary page section compositions while preserving the shared palette, typography, hairlines, and controlled radii.
-- **Do** honor English-default/French-complete content and `prefers-reduced-motion`.
-- **Do** keep primary actions clear and use `#0660f5` dark / `#065ee9` light with their defined hover colors.
+
+- Preserve white-dominant light mode, existing theme choices, English default, and complete French content.
+- Use the supplied genuine CS monogram and the exact “Build. Innovate. Evolve.” slogan.
+- Keep the hero centered, open, and visually led by the true monogram.
+- Explain real user benefits before technical specifications.
+- Use locally hosted Manrope and the exact theme tokens from the CSS source.
+- Honor keyboard access, readable contrast, and `prefers-reduced-motion`.
+- Keep catalogue availability and official GitHub links truthful.
 
 ### Don't
-- **Don't** invent product dashboards, apps, customer logos, metrics, or testimonials for an empty catalogue.
-- **Don't** substitute a fabricated monogram or unrelated symbol for the supplied CS mark.
-- **Don't** use the dark accent as the light-theme accent; use `#0058dd` in light mode.
-- **Don't** add decorative motion that competes with the content or persists under reduced-motion preferences.
-- **Don't** introduce unrelated accent colors, heavy gradients, or oversized shadows into the quiet technical palette.
+
+- Do not bring back the marine or orbital art direction, ellipses, rings, or orbiting objects.
+- Do not use Apple assets, SF fonts, Apple product names, fabricated product imagery, or fake specifications.
+- Do not invent apps, customers, metrics, testimonials, contact details, personal names, or user identities.
+- Do not override the user’s saved theme or language preference.
+- Do not add unrelated colors, neon, or gratuitous gradients.

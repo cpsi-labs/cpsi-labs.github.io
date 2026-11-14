@@ -69,15 +69,15 @@ for (const width of [360, 390, 768, 1024, 1440]) {
     }
   });
 }
-test('preferences persist, defaults are English and dark', async ({ page }) => {
+test('preferences persist, defaults are English and light', async ({ page }) => {
   await page.goto('/');
   await expect(page.locator('html')).toHaveAttribute('lang', 'en');
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
   await page.getByRole('button', { name: 'Passer en français' }).click();
-  await page.getByRole('button', { name: 'Activer le thème clair' }).click();
+  await page.getByRole('button', { name: 'Activer le thème sombre' }).click();
   await page.reload();
   await expect(page.locator('html')).toHaveAttribute('lang', 'fr');
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
   await page.goto('/#/downloads');
   await expect(page.locator('h1')).toContainText('officiel');
 });
@@ -92,8 +92,8 @@ test('unavailable localStorage does not break preferences', async ({ page }) => 
   await page.goto('/');
   await page.getByRole('button', { name: 'Passer en français' }).click();
   await expect(page.locator('html')).toHaveAttribute('lang', 'fr');
-  await page.getByRole('button', { name: 'Activer le thème clair' }).click();
-  await expect(page.locator('html')).toHaveAttribute('data-theme', 'light');
+  await page.getByRole('button', { name: 'Activer le thème sombre' }).click();
+  await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
 });
 test('catalogue search, filters and reset retain their state across language changes', async ({
   page,
@@ -131,15 +131,11 @@ test('mobile navigation, focus, escape and route reload', async ({ page }) => {
   await page.reload();
   await expect(page.locator('h1')).toHaveText('The official starting point.');
 });
-test('expertise tabs keyboard navigation and documentation anchors', async ({ page }) => {
+test('showcase navigation and documentation anchors', async ({ page }) => {
   await page.goto('/');
-  const mobile = page.getByRole('tab', { name: 'Mobile applications' });
-  await mobile.focus();
-  await page.keyboard.press('ArrowDown');
-  await expect(page.getByRole('tab', { name: 'Desktop software' })).toBeFocused();
-  await expect(page.getByRole('tabpanel')).toContainText('Linux and Windows');
-  await page.keyboard.press('End');
-  await expect(page.getByRole('tabpanel')).toContainText('remove repetition');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('CPSI LABS');
+  await page.getByRole('link', { name: 'Discover our applications', exact: true }).click();
+  await expect(page.getByRole('searchbox')).toBeVisible();
   await page.goto('/#/docs?section=verification');
   await expect(page.locator('#verification')).toBeInViewport();
   await page.getByRole('button', { name: 'Troubleshooting', exact: true }).click();
@@ -154,8 +150,25 @@ test('FAQ opens and reduced motion disables animations', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
   expect(
-    await page.locator('.symbol-disc').evaluate((el) => getComputedStyle(el).animationName),
+    await page.locator('.monogram-object').evaluate((el) => getComputedStyle(el).animationName),
   ).toBe('none');
+  await page.locator('.software-showcase').scrollIntoViewIfNeeded();
+  expect(
+    await page.evaluate(
+      () => document.getAnimations().filter((a) => a.playState === 'running').length,
+    ),
+  ).toBe(0);
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await page.goto('/#/about');
+  await page.goto('/');
+  await page.locator('.software-showcase').scrollIntoViewIfNeeded();
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await expect
+    .poll(() =>
+      page.evaluate(() => document.getAnimations().filter((a) => a.playState === 'running').length),
+    )
+    .toBe(0);
+  await expect(page.locator('.software-showcase h2')).toBeVisible();
   await page.goto('/#/docs');
   await page.getByText('Are the applications free?', { exact: true }).click();
   await expect(
@@ -185,6 +198,7 @@ test('official URL and local asset guards reject untrusted destinations', () => 
     expect(localAsset(path)).toBeUndefined();
 });
 test('capture review matrix', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' });
   for (const mode of [
     { name: 'desktop', width: 1440, height: 1000 },
     { name: 'mobile', width: 390, height: 844 },
@@ -199,19 +213,25 @@ test('capture review matrix', async ({ page }) => {
       await page.reload();
       await page.evaluate(() => document.fonts.ready);
       await page
-        .locator('.symbol-disc')
+        .locator('.monogram-object')
         .evaluate((el) => Promise.all(el.getAnimations().map((a) => a.finished)));
       await page.screenshot({
-        path: `/tmp/cpsi-review/home-${mode.name}-${theme}.png`,
+        path: `/tmp/cpsi-redesign-review/home-${mode.name}-${theme}.png`,
         fullPage: true,
       });
     }
   for (const route of ['applications', 'downloads', 'docs', 'about', 'support', 'legal']) {
     await page.setViewportSize({ width: 1440, height: 1000 });
     await page.goto('/#/' + route);
-    await page.screenshot({ path: `/tmp/cpsi-review/${route}-desktop.png`, fullPage: true });
+    await page.screenshot({
+      path: `/tmp/cpsi-redesign-review/${route}-desktop.png`,
+      fullPage: true,
+    });
     await page.setViewportSize({ width: 390, height: 844 });
-    await page.screenshot({ path: `/tmp/cpsi-review/${route}-mobile.png`, fullPage: true });
+    await page.screenshot({
+      path: `/tmp/cpsi-redesign-review/${route}-mobile.png`,
+      fullPage: true,
+    });
   }
   for (const theme of ['light', 'dark'])
     for (const width of [390, 1440]) {
@@ -231,7 +251,7 @@ test('capture review matrix', async ({ page }) => {
         await page.goto('/#/' + route);
         await page.evaluate(() => document.fonts.ready);
         await page.screenshot({
-          path: `/tmp/cpsi-review/${route || 'home'}-fr-${width}-${theme}.png`,
+          path: `/tmp/cpsi-redesign-review/${route || 'home'}-fr-${width}-${theme}.png`,
           fullPage: true,
         });
       }
@@ -241,8 +261,25 @@ test('capture review matrix', async ({ page }) => {
 test('catalogue validation rejects incomplete publication data', async () => {
   const { validateCatalogue } = await import('../src/data/validateCatalogue');
   const fixture = testApplication;
+  const { validateAssetFiles } = await import('../scripts/validate-assets');
+  expect(() => validateAssetFiles([fixture], 'public')).toThrow('missing local image');
+  expect(() => validateAssetFiles([{ ...fixture, screenshots: [] }], 'public')).not.toThrow();
 
   expect(() => validateCatalogue([])).not.toThrow();
+  const { slogan, specifications, presentation, ...legacy } = fixture;
+  expect(() => validateCatalogue([legacy])).not.toThrow();
+  expect(() => validateCatalogue([{ ...fixture, presentation: { heroScreenshot: 99 } }])).toThrow(
+    'hero screenshot',
+  );
+  expect(() =>
+    validateCatalogue([
+      { ...fixture, features: [{ ...fixture.features[0], screenshotIndex: -1 }] },
+    ]),
+  ).toThrow('feature screenshot');
+  expect(() => validateCatalogue([{ ...fixture, slogan: { en: '', fr: 'Test' } }])).toThrow(
+    'slogan',
+  );
+
   expect(() => validateCatalogue([fixture])).not.toThrow();
   expect(() => validateCatalogue([fixture, fixture])).toThrow('duplicate');
   expect(() => validateCatalogue([{ ...fixture, releases: [] }])).toThrow('published release');
@@ -288,6 +325,15 @@ test('application detail and downloads derive from one catalogue entry (local te
     !!process.env.TEST_BASE_URL,
     'Local fixture intercepts a dev module, never a published bundle.',
   );
+  await page.route('**/apps/test-fixture/*.svg', async (route) => {
+    const portrait = route.request().url().includes('portrait');
+    const width = portrait ? 390 : 1200;
+    const height = portrait ? 720 : 750;
+    await route.fulfill({
+      contentType: 'image/svg+xml',
+      body: `<svg xmlns="http://www.w3.org/2000/svg" width="${width}" height="${height}" viewBox="0 0 ${width} ${height}"><rect width="100%" height="100%" fill="#f5f5f7"/><rect x="24" y="24" width="${width - 48}" height="${height - 48}" rx="12" fill="#e6edfa"/><text x="50%" y="42%" text-anchor="middle" fill="#10233f" font-family="sans-serif" font-size="${portrait ? 24 : 52}">VISUAL TEST ONLY</text><text x="50%" y="51%" text-anchor="middle" fill="#005bd3" font-family="sans-serif" font-size="${portrait ? 15 : 27}">Not a published application</text><rect x="${width * 0.2}" y="${height * 0.65}" width="${width * 0.6}" height="12" rx="6" fill="#0063ed"/></svg>`,
+    });
+  });
   await page.route('**/src/data/applications.ts', async (route) => {
     await route.fulfill({
       contentType: 'application/javascript',
@@ -296,9 +342,63 @@ test('application detail and downloads derive from one catalogue entry (local te
   });
   await page.goto('/#/applications/test-fixture');
   await expect(page.getByRole('heading', { level: 1 })).toHaveText('Test fixture');
-  await expect(page.getByRole('img', { name: 'Test screenshot one', exact: true })).toBeVisible();
-  await page.getByRole('button', { name: 'Test screenshot two', exact: true }).click();
-  await expect(page.getByRole('img', { name: 'Test screenshot two', exact: true })).toBeVisible();
+  await expect(page.locator('.product-hero .frame-phone')).toBeVisible();
+  await expect(page.locator('.product-benefit .frame-desktop')).toBeVisible();
+  await expect(page.locator('.specification-list')).toContainText('Test environment only');
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  for (const theme of ['light', 'dark'])
+    for (const width of [390, 768, 1440]) {
+      await page.setViewportSize({ width, height: 900 });
+      await page.evaluate((t) => localStorage.setItem('cpsi-theme', t), theme);
+      await page.reload();
+      await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
+      expect(
+        await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1),
+      ).toBe(true);
+      for (const image of await page.locator('main img').all()) {
+        await image.scrollIntoViewIfNeeded();
+        await expect
+          .poll(() =>
+            image.evaluate(
+              (img) =>
+                (img as HTMLImageElement).complete && (img as HTMLImageElement).naturalWidth > 0,
+            ),
+          )
+          .toBe(true);
+      }
+      await page.evaluate(() => scrollTo(0, 0));
+      const { default: AxeBuilder } = await import('@axe-core/playwright');
+      if (width === 390)
+        expect(
+          (await new AxeBuilder({ page }).withTags(['wcag2a', 'wcag2aa', 'wcag21aa']).analyze())
+            .violations,
+        ).toEqual([]);
+
+      await page.screenshot({
+        path: `/tmp/cpsi-redesign-review/product-fixture-${width}-${theme}.png`,
+        fullPage: true,
+      });
+    }
+  await page.getByRole('link', { name: 'Download', exact: true }).first().click();
+  await expect(page.locator('#product-downloads')).toBeFocused();
+  await expect(page.locator('#product-downloads')).toBeInViewport();
+  expect(
+    await page.locator('#product-downloads').evaluate((el) => el.getBoundingClientRect().top),
+  ).toBeGreaterThanOrEqual(
+    await page.locator('.product-subnav').evaluate((el) => el.getBoundingClientRect().bottom),
+  );
+
+  await expect(
+    page.locator('.app-gallery').getByRole('img', { name: 'Test screenshot one', exact: true }),
+  ).toBeVisible();
+  await page.getByRole('button', { name: 'Test screenshot two', exact: true }).focus();
+  await page.keyboard.press('Enter');
+  await expect(
+    page.getByRole('button', { name: 'Test screenshot two', exact: true }),
+  ).toHaveAttribute('aria-pressed', 'true');
+  await expect(
+    page.locator('.app-gallery').getByRole('img', { name: 'Test screenshot two', exact: true }),
+  ).toBeVisible();
   await expect(page.getByRole('link', { name: 'APK', exact: true })).toHaveAttribute(
     'href',
     testApplication.releases[0].assets[0].url,
@@ -308,7 +408,9 @@ test('application detail and downloads derive from one catalogue entry (local te
     testApplication.license.url,
   );
   await page.getByRole('button', { name: 'Passer en français' }).click();
-  await expect(page.getByRole('img', { name: 'Capture de test deux', exact: true })).toBeVisible();
+  await expect(
+    page.locator('.app-gallery').getByRole('img', { name: 'Capture de test deux', exact: true }),
+  ).toBeVisible();
   await page.goto('/#/downloads');
   await expect(page.locator('.download-row')).toContainText('Test fixture');
   await expect(page.getByRole('link', { name: 'APK', exact: true })).toHaveAttribute(

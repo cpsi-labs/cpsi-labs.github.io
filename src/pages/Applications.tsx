@@ -1,48 +1,37 @@
-import { useEffect, useState } from 'react';
-import { Link, useParams, useSearchParams } from 'react-router-dom';
-import {
-  ArrowLeft,
-  ArrowRight,
-  ArrowUpRight,
-  Download,
-  FileText,
-  Search,
-  SlidersHorizontal,
-  X,
-} from 'lucide-react';
+import { ProductMedia } from '../components/ProductMedia';
+import { Link, useSearchParams } from 'react-router-dom';
+import { ArrowRight, ArrowUpRight, FileText, Search, SlidersHorizontal, X } from 'lucide-react';
 import { applications, categories, type Application } from '../data/applications';
 import { disciplines } from '../data/disciplines';
 import { useCopy, usePreferences } from '../lib/preferences';
 import { localAsset } from '../lib/links';
-import { ExternalLink } from '../components/Layout';
-import { EmptyCatalogue, NotFound, PageHeading } from '../components/Common';
+import { EmptyCatalogue, PageHeading } from '../components/Common';
 export function ApplicationCard({ app }: { app: Application }) {
   const { language } = usePreferences();
   const c = useCopy();
   return (
     <article className="application-card">
       <div className="app-icon">
-        {localAsset(app.icon) && <img src={localAsset(app.icon)} alt="" width="52" height="52" />}
-      </div>
-      <div className="tags">
-        {app.platforms.map((p) => (
-          <span key={p}>{p === 'Cross-platform' ? c('Cross-platform', 'Multiplateforme') : p}</span>
-        ))}
+        {localAsset(app.icon) && <img src={localAsset(app.icon)} alt="" width="64" height="64" />}
       </div>
       <h3>
-        <Link to={`/applications/${app.slug}`}>
-          {app.name}
-          <ArrowUpRight size={18} />
-        </Link>
+        <Link to={`/applications/${app.slug}`}>{app.name}</Link>
       </h3>
-      <p>{app.summary[language]}</p>
-      <span className="app-version">
-        {app.releases[0]?.version} · {app.license.name[language]}
-      </span>
+      <p>{(app.slogan ?? app.summary)[language]}</p>
+      {app.screenshots[0] && (
+        <ProductMedia screenshot={app.screenshots[0]} className="catalogue-preview" />
+      )}
       <Link className="text-link" to={`/applications/${app.slug}`}>
         {c('Discover application', 'Découvrir l’application')}
         <ArrowRight size={16} />
       </Link>
+      <div className="tags">
+        {app.platforms.map((platform) => (
+          <span key={platform}>
+            {platform === 'Cross-platform' ? c('Cross-platform', 'Multiplateforme') : platform}
+          </span>
+        ))}
+      </div>
     </article>
   );
 }
@@ -178,134 +167,4 @@ export function Applications() {
     </div>
   );
 }
-export function ApplicationDetails() {
-  const { slug } = useParams();
-  const app = applications.find((app) => app.slug === slug);
-  const c = useCopy();
-  const { language } = usePreferences();
-  const [selected, setSelected] = useState(0);
-  useEffect(() => setSelected(0), [slug]);
-  if (!app) return <NotFound application />;
-  return (
-    <div className="container page-content">
-      <Link className="text-link back-link" to="/applications">
-        <ArrowLeft size={16} />
-        {c('All applications', 'Toutes les applications')}
-      </Link>
-      <div className="application-heading">
-        <div className="app-icon large">
-          {localAsset(app.icon) && <img src={localAsset(app.icon)} alt="" width="80" height="80" />}
-        </div>
-        <PageHeading title={app.name} description={app.summary[language]} />
-      </div>
-      <div className="tags">
-        {app.platforms.map((p) => (
-          <span key={p}>{p === 'Cross-platform' ? c('Cross-platform', 'Multiplateforme') : p}</span>
-        ))}
-        <span>{app.license.name[language]}</span>
-      </div>
-      <p className="app-description">{app.description[language]}</p>
-      {app.screenshots.length > 0 && (
-        <section className="app-gallery" aria-label={c('Screenshots', 'Captures d’écran')}>
-          {localAsset(app.screenshots[selected]?.src) && (
-            <img
-              className="main-screenshot"
-              src={localAsset(app.screenshots[selected].src)}
-              alt={app.screenshots[selected].alt[language]}
-            />
-          )}
-          <div>
-            {app.screenshots.map((shot, i) => (
-              <button
-                key={shot.src}
-                aria-pressed={selected === i}
-                onClick={() => setSelected(i)}
-                aria-label={shot.alt[language]}
-              >
-                {localAsset(shot.src) && <img src={localAsset(shot.src)} alt="" />}
-              </button>
-            ))}
-          </div>
-        </section>
-      )}
-      <section className="detail-section">
-        <h2>{c('Built for the way you work.', 'Pensé pour vos usages.')}</h2>
-        <div className="feature-list">
-          {app.features.map((feature, i) => (
-            <article key={i}>
-              <h3>{feature.title[language]}</h3>
-              <p>{feature.description[language]}</p>
-            </article>
-          ))}
-        </div>
-      </section>
-      <section className="detail-section">
-        <h2>{c('Versions & downloads', 'Versions et téléchargements')}</h2>
-        {app.releases.map((release) => (
-          <article className="release" key={release.version}>
-            <div>
-              <h3>{release.version}</h3>
-              <time dateTime={release.date}>
-                {new Date(release.date + 'T12:00:00').toLocaleDateString(language, {
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
-              </time>
-            </div>
-            <p>{release.notes[language]}</p>
-            <div className="release-assets">
-              {release.assets.map((asset) => (
-                <div key={asset.url}>
-                  <ExternalLink href={asset.url} className="button secondary">
-                    <Download size={16} />
-                    {asset.label}
-                  </ExternalLink>
-                  {asset.sha256 && (
-                    <p className="checksum">
-                      SHA-256: <code>{asset.sha256}</code>
-                    </p>
-                  )}
-                </div>
-              ))}
-            </div>
-            <ExternalLink href={release.url} className="text-link">
-              {c('Release notes on GitHub', 'Notes de version sur GitHub')}
-              <ArrowUpRight size={15} />
-            </ExternalLink>
-          </article>
-        ))}
-      </section>
-      <div className="resource-links">
-        <ExternalLink href={app.documentation}>
-          <FileText size={20} />
-          <span>Documentation</span>
-          <ArrowUpRight size={17} />
-        </ExternalLink>
-        <ExternalLink href={app.license.url}>
-          <FileText size={20} />
-          <span>
-            {c('License', 'Licence')} · {app.license.name[language]}
-          </span>
-          <ArrowUpRight size={17} />
-        </ExternalLink>
-        <ExternalLink href={app.repository}>
-          <span>{c('Official repository', 'Dépôt officiel')}</span>
-          <ArrowUpRight size={17} />
-        </ExternalLink>
-        {app.support?.issues && (
-          <ExternalLink href={app.support.issues}>
-            <span>{c('Report a bug', 'Signaler un bug')}</span>
-            <ArrowUpRight size={17} />
-          </ExternalLink>
-        )}
-        {app.support?.discussions && (
-          <ExternalLink href={app.support.discussions}>
-            <span>{c('Join the discussion', 'Participer à la discussion')}</span>
-            <ArrowUpRight size={17} />
-          </ExternalLink>
-        )}
-      </div>
-    </div>
-  );
-}
+export { ProductPage as ApplicationDetails } from './ProductPage';
