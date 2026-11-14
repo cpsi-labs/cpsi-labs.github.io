@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-14T00:00:00Z",
+  "title": "Design System: CPSI LABS",
+  "extensions": {
+    "shadows": [
+      {
+        "name": "ambient-dark",
+        "value": "0 24px 55px #00000025",
+        "purpose": "Ambient depth on emphasized dark-theme surfaces."
+      },
+      {
+        "name": "ambient-light",
+        "value": "0 24px 55px #13376712",
+        "purpose": "Ambient depth on emphasized light-theme surfaces."
+      },
+      {
+        "name": "primary-button",
+        "value": "0 5px 16px #0055e51c",
+        "purpose": "Subtle separation beneath the primary action."
+      },
+      {
+        "name": "primary-button-hover",
+        "value": "0 8px 22px #0055e52b",
+        "purpose": "Slightly stronger depth while hovering the primary action."
+      }
+    ],
+    "motion": [
+      {
+        "name": "ease",
+        "value": "cubic-bezier(0.16, 1, 0.3, 1)",
+        "purpose": "Soft deceleration for the finite hero mark entrance and diagram transitions."
+      },
+      {
+        "name": "control-transition",
+        "value": "0.18s",
+        "purpose": "Color, background, border, and shadow feedback for links and controls."
+      },
+      {
+        "name": "hero-mark-entrance",
+        "value": "1.3s",
+        "purpose": "One finite entrance for the orbital CS symbol."
+      },
+      {
+        "name": "reduced-motion",
+        "value": "prefers-reduced-motion: reduce",
+        "purpose": "Disable animation and transitions and turn off smooth scrolling."
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "mobile",
+        "value": "600px",
+        "purpose": "Single-column mobile compositions and compact gutters."
+      },
+      {
+        "name": "tablet",
+        "value": "850px",
+        "purpose": "Collapsible navigation and tablet layout changes."
+      },
+      {
+        "name": "wide-tablet",
+        "value": "1100px",
+        "purpose": "Intermediate container gutters and desktop grid adjustments."
+      },
+      {
+        "name": "wide-display",
+        "value": "1500px",
+        "purpose": "Expanded hero scale on wide displays."
+      }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "High-contrast catalogue and task actions.",
+      "html": "<button class=\"ds-btn-primary\">Explore applications <span aria-hidden=\"true\">→</span></button>",
+      "css": ".ds-btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 20px; min-height: 48px; padding: 12px 20px; border: 0; border-radius: 7px; background: #0660f5; color: #fff; font: 600 13px/1.4 Manrope, sans-serif; box-shadow: 0 5px 16px #0055e51c; cursor: pointer; transition: color .18s, background-color .18s, box-shadow .18s; } .ds-btn-primary:hover { background: #2878ff; box-shadow: 0 8px 22px #0055e52b; } .ds-btn-primary:focus-visible { outline: 2px solid #5291ff; outline-offset: 5px; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Quiet alternative action with a precise hairline border.",
+      "html": "<button class=\"ds-btn-secondary\">View documentation</button>",
+      "css": ".ds-btn-secondary { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 20px; border: 1px solid #253147; border-radius: 7px; background: #101c30; color: #f2f5fc; font: 600 13px/1.4 Manrope, sans-serif; cursor: pointer; transition: color .18s, background-color .18s, border-color .18s; } .ds-btn-secondary:hover { border-color: #5291ff; color: #5291ff; } .ds-btn-secondary:focus-visible { outline: 2px solid #5291ff; outline-offset: 5px; }"
+    },
+    {
+      "name": "Filter Chip",
+      "kind": "chip",
+      "description": "Compact catalogue filter in a quiet outlined style.",
+      "html": "<button class=\"ds-chip\" aria-pressed=\"true\">All platforms</button>",
+      "css": ".ds-chip { padding: 8px 13px; border: 1px solid transparent; border-radius: 6px; background: transparent; color: #9eaac0; font: 400 12px/1.75 Manrope, sans-serif; cursor: pointer; transition: color .18s, background-color .18s, border-color .18s; } .ds-chip:hover { background: #0c1425; color: #f2f5fc; } .ds-chip[aria-pressed=\"true\"] { border-color: #253147; background: #142648; color: #5291ff; } .ds-chip:focus-visible { outline: 2px solid #5291ff; outline-offset: 5px; }"
+    },
+    {
+      "name": "Surface Card",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Quiet content surface separated by tonal layering and a hairline.",
+      "html": "<article class=\"ds-card\"><h3>Technical discipline</h3><p>Systems built with clarity and care.</p></article>",
+      "css": ".ds-card { padding: 25px; border: 1px solid #253147; border-radius: 12px; background: #101c30; color: #f2f5fc; font-family: Manrope, sans-serif; } .ds-card h3 { margin: 17px 0 12px; font-size: 19px; font-weight: 600; line-height: 1.18; letter-spacing: -.02em; } .ds-card p { margin: 0 0 1.2em; color: #9eaac0; font-size: 13px; line-height: 1.75; }"
+    },
+    {
+      "name": "Text Field",
+      "kind": "input",
+      "description": "Theme-surface field with a clear accent focus state.",
+      "html": "<label class=\"ds-field\"><span>Search catalogue</span><input type=\"search\" placeholder=\"Search\" /></label>",
+      "css": ".ds-field { display: grid; gap: 8px; color: #9eaac0; font: 600 11px/1.5 Manrope, sans-serif; } .ds-field input { width: 100%; padding: 12px 14px; border: 1px solid #253147; border-radius: 6px; background: #0c1425; color: #f2f5fc; font: 400 14px/1.5 Manrope, sans-serif; transition: border-color .18s, box-shadow .18s; } .ds-field input:focus-visible { border-color: #5291ff; outline: 2px solid #5291ff; outline-offset: 5px; } .ds-field input::placeholder { color: #7586a2; }"
+    },
+    {
+      "name": "Header Navigation",
+      "kind": "nav",
+      "description": "Compact route navigation with a restrained accent hover.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#applications\">Applications</a><a href=\"#downloads\">Downloads</a><a href=\"#resources\">Resources</a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 24px; font: 600 11px/1.5 Manrope, sans-serif; } .ds-nav a { color: #9eaac0; text-decoration: none; transition: color .18s; } .ds-nav a:hover, .ds-nav a[aria-current=\"page\"] { color: #5291ff; } .ds-nav a:focus-visible { outline: 2px solid #5291ff; outline-offset: 5px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Independent Systems Atelier",
+    "overview": "CPSI LABS presents an independent software lab through the confidence of a considered technical publisher. The actual interlocking CS mark is the identity's hero artifact; orbital linework echoes its connected geometry. Wide, direct typography and precise hairlines give the work presence while quiet surfaces keep the content in focus.\n\nThe system supports an honest catalogue, technical documentation, company information, support, and legal content across English and French. Dark navy is the primary environment; a pale blue-white light theme carries the same hierarchy and electric-blue identity. Components stay familiar and restrained, while page sections vary their composition to suit their content. English is the default language, and both themes are first-class.",
+    "keyCharacteristics": [
+      "Premium independent technology publisher, centered on the real CS symbol.",
+      "Deep navy, electric blue, cool whites, and disciplined hairlines.",
+      "Broad Manrope typography, calm surfaces, and varied section compositions.",
+      "Responsive bilingual experience with dark and light themes.",
+      "Motion is finite and purposeful; reduced-motion preferences are honored."
+    ],
+    "rules": [
+      {
+        "name": "The Theme-Paired Accent Rule",
+        "body": "Use the dark or light accent/action values with their corresponding theme; do not carry dark-theme blue onto light surfaces when the light token is defined.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Do use the supplied, real CS symbol as the identity mark and preserve its proportions.",
+      "Do pair theme-specific colors and maintain readable contrast in both themes.",
+      "Do use Manrope and the observed display, headline, title, body, and label hierarchy.",
+      "Do vary page section compositions while preserving the shared palette, typography, hairlines, and controlled radii.",
+      "Do honor English-default/French-complete content and `prefers-reduced-motion`.",
+      "Do keep primary actions clear and use `#0660f5` dark / `#065ee9` light with their defined hover colors."
+    ],
+    "donts": [
+      "Don't invent product dashboards, apps, customer logos, metrics, or testimonials for an empty catalogue.",
+      "Don't substitute a fabricated monogram or unrelated symbol for the supplied CS mark.",
+      "Don't use the dark accent as the light-theme accent; use `#0058dd` in light mode.",
+      "Don't add decorative motion that competes with the content or persists under reduced-motion preferences.",
+      "Don't introduce unrelated accent colors, heavy gradients, or oversized shadows into the quiet technical palette."
+    ]
+  }
+}
