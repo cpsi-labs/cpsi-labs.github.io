@@ -115,16 +115,7 @@ export function Applications() {
           const d = disciplines.find((d) => d.id === id)!;
           return (
             <button key={id} aria-pressed={category === id} onClick={() => filter('category', id)}>
-              {language === 'en'
-                ? d.short
-                : {
-                    mobile: 'Mobile',
-                    desktop: 'Desktop',
-                    web: 'Web et API',
-                    systems: 'Systèmes',
-                    security: 'Sécurité',
-                    automation: 'Automatisation',
-                  }[id]}
+              {language === 'en' ? d.short : d.frShort}
             </button>
           );
         })}

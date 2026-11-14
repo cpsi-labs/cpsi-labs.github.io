@@ -6,6 +6,7 @@ export const disciplines = [
     en: 'Mobile applications',
     fr: 'Applications mobiles',
     short: 'Mobile',
+    frShort: 'Mobile',
     enText:
       'Thoughtful experiences for Android and cross-platform environments. Built around the way people actually use their devices.',
     frText:
@@ -19,6 +20,7 @@ export const disciplines = [
     en: 'Desktop software',
     fr: 'Logiciels desktop',
     short: 'Desktop',
+    frShort: 'Desktop',
     enText:
       'Focused tools for Linux and Windows. Software that fits naturally into your everyday workflow.',
     frText:
@@ -32,6 +34,7 @@ export const disciplines = [
     en: 'Web applications & APIs',
     fr: 'Applications web et API',
     short: 'Web & API',
+    frShort: 'Web et API',
     enText:
       'Clear interfaces and well-defined APIs. Connected experiences with maintainability at their core.',
     frText:
@@ -45,6 +48,7 @@ export const disciplines = [
     en: 'Networks & systems',
     fr: 'Réseaux et systèmes',
     short: 'Systems',
+    frShort: 'Systèmes',
     enText:
       'Practical utilities for understanding networks and working with systems. Make complex environments easier to navigate.',
     frText:
@@ -58,6 +62,7 @@ export const disciplines = [
     en: 'Security & privacy',
     fr: 'Sécurité et confidentialité',
     short: 'Security',
+    frShort: 'Sécurité',
     enText:
       'Security-conscious software and privacy-minded design. Keep control of the information that matters.',
     frText:
@@ -71,6 +76,7 @@ export const disciplines = [
     en: 'Automation & digital tools',
     fr: 'Automatisation et outils digitaux',
     short: 'Automation',
+    frShort: 'Automatisation',
     enText:
       'Connect steps, remove repetition and make room for meaningful work. Purpose-built solutions for practical problems.',
     frText:

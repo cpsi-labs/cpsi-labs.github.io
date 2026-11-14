@@ -133,8 +133,20 @@ test('mobile navigation, focus, escape and route reload', async ({ page }) => {
 });
 test('showcase navigation and documentation anchors', async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('CPSI LABS');
-  await page.getByRole('link', { name: 'Discover our applications', exact: true }).click();
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText(
+    'Software. Mobile apps. Digital tools.',
+  );
+  await page.getByRole('link', { name: 'Explore the catalogue', exact: true }).click();
+  await expect(page.getByRole('searchbox')).toBeVisible();
+  await page.goto('/');
+  await page
+    .getByRole('navigation', { name: 'Categories' })
+    .getByRole('link', { name: 'Systems', exact: true })
+    .click();
+  await expect(page.getByRole('button', { name: 'Systems', exact: true })).toHaveAttribute(
+    'aria-pressed',
+    'true',
+  );
   await expect(page.getByRole('searchbox')).toBeVisible();
   await page.goto('/#/docs?section=verification');
   await expect(page.locator('#verification')).toBeInViewport();
@@ -149,10 +161,7 @@ test('showcase navigation and documentation anchors', async ({ page }) => {
 test('FAQ opens and reduced motion disables animations', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await page.goto('/');
-  expect(
-    await page.locator('.monogram-object').evaluate((el) => getComputedStyle(el).animationName),
-  ).toBe('none');
-  await page.locator('.software-showcase').scrollIntoViewIfNeeded();
+  await page.locator('.home-tiles').scrollIntoViewIfNeeded();
   expect(
     await page.evaluate(
       () => document.getAnimations().filter((a) => a.playState === 'running').length,
@@ -161,14 +170,14 @@ test('FAQ opens and reduced motion disables animations', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.goto('/#/about');
   await page.goto('/');
-  await page.locator('.software-showcase').scrollIntoViewIfNeeded();
+  await page.locator('.home-tiles').scrollIntoViewIfNeeded();
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await expect
     .poll(() =>
       page.evaluate(() => document.getAnimations().filter((a) => a.playState === 'running').length),
     )
     .toBe(0);
-  await expect(page.locator('.software-showcase h2')).toBeVisible();
+  await expect(page.locator('.home-tiles h2').first()).toBeVisible();
   await page.goto('/#/docs');
   await page.getByText('Are the applications free?', { exact: true }).click();
   await expect(
@@ -212,9 +221,9 @@ test('capture review matrix', async ({ page }) => {
       }, theme);
       await page.reload();
       await page.evaluate(() => document.fonts.ready);
-      await page
-        .locator('.monogram-object')
-        .evaluate((el) => Promise.all(el.getAnimations().map((a) => a.finished)));
+      await page.locator('.home-stage img.on-light, .home-stage img.on-dark').first().waitFor({
+        state: 'attached',
+      });
       await page.screenshot({
         path: `/tmp/cpsi-redesign-review/home-${mode.name}-${theme}.png`,
         fullPage: true,

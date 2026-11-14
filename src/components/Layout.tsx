@@ -1,7 +1,7 @@
 import { GithubIcon } from './GithubIcon';
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { ArrowUpRight, Globe2, Menu, Moon, Sun, X, ArrowRight } from 'lucide-react';
+import { ArrowUpRight, Menu, Moon, Search, Sun, X } from 'lucide-react';
 import { useCopy, usePreferences } from '../lib/preferences';
 import { GITHUB, officialLink } from '../lib/links';
 export function ExternalLink({
@@ -23,12 +23,15 @@ export function ExternalLink({
 export function Brand({ footer = false }: { footer?: boolean }) {
   return (
     <Link to="/" aria-label="CPSI LABS" className={`brand ${footer ? 'brand-footer' : ''}`}>
-      <span className="brand-symbol">
-        <img src="/brand/symbol.webp" alt="" width="40" height="30" />
-      </span>
-      <span>
-        CPSI <b>LABS</b>
-        <span className="brand-point" />
+      {!footer && (
+        <span className="brand-symbol" aria-hidden="true">
+          <img className="on-light" src="/brand/symbol.webp" alt="" width="833" height="599" />
+          <img className="on-dark" src="/brand/symbol-dark.webp" alt="" width="833" height="599" />
+        </span>
+      )}
+      <span className="brand-wordmark" aria-hidden="true">
+        <img className="on-light" src="/brand/wordmark.webp" alt="" width="640" height="41" />
+        <img className="on-dark" src="/brand/wordmark-dark.webp" alt="" width="640" height="41" />
       </span>
     </Link>
   );
@@ -92,20 +95,38 @@ export function Layout({ children }: { children: ReactNode }) {
             id="navigation"
             aria-label={c('Main navigation', 'Navigation principale')}
           >
-            <NavLink to="/applications">{c('Applications', 'Applications')}</NavLink>
+            <NavLink to="/applications" end>
+              {c('Applications', 'Applications')}
+            </NavLink>
+            <Link className="nav-category" to="/applications?category=mobile">
+              Mobile
+            </Link>
+            <Link className="nav-category" to="/applications?category=desktop">
+              Desktop
+            </Link>
+            <Link className="nav-category" to="/applications?category=web">
+              {c('Web & API', 'Web et API')}
+            </Link>
             <NavLink to="/downloads">{c('Downloads', 'Téléchargements')}</NavLink>
             <NavLink to="/docs">{c('Documentation', 'Documentation')}</NavLink>
             <NavLink to="/about">{c('About', 'À propos')}</NavLink>
             <NavLink to="/support">{c('Support', 'Assistance')}</NavLink>
           </nav>
           <div className="header-tools">
+            <Link
+              to="/applications"
+              className="icon-button search-control"
+              aria-label={c('Search applications', 'Rechercher une application')}
+            >
+              <Search size={16} />
+            </Link>
             <button
               className="language-control"
               onClick={() => setLanguage(language === 'en' ? 'fr' : 'en')}
               aria-label={language === 'en' ? 'Passer en français' : 'Switch to English'}
             >
-              <Globe2 size={15} />
-              <span>{language.toUpperCase()}</span>
+              <span className={language === 'en' ? 'on' : ''}>EN</span>
+              <span className={language === 'fr' ? 'on' : ''}>FR</span>
             </button>
             <button
               className="icon-button theme-control"
@@ -123,8 +144,7 @@ export function Layout({ children }: { children: ReactNode }) {
               className="header-github"
               aria-label={c('CPSI LABS on GitHub', 'CPSI LABS sur GitHub')}
             >
-              <GithubIcon size={19} />
-              <ArrowUpRight size={13} />
+              <GithubIcon size={18} />
             </a>
             <button
               ref={menuButton}
@@ -146,48 +166,75 @@ export function Layout({ children }: { children: ReactNode }) {
       </main>
       <footer className="site-footer">
         <div className="container">
-          <div className="footer-top">
+          <div className="footer-links">
             <div>
-              <Brand footer />
-              <p>
-                {c(
-                  'Independent thinking. Purposeful software.',
-                  'Penser librement. Développer avec sens.',
-                )}
-              </p>
-              <span className="footer-slogan">Build. Innovate. Evolve.</span>
+              <span>Applications</span>
+              <Link to="/applications">{c('All applications', 'Toutes les applications')}</Link>
+              <Link className="nav-category" to="/applications?category=mobile">
+                Mobile
+              </Link>
+              <Link className="nav-category" to="/applications?category=desktop">
+                Desktop
+              </Link>
+              <Link className="nav-category" to="/applications?category=web">
+                {c('Web & API', 'Web et API')}
+              </Link>
+              <Link to="/applications?category=automation">
+                {c('Automation', 'Automatisation')}
+              </Link>
             </div>
-            <div className="footer-links">
-              <div>
-                <span>{c('Explore', 'Explorer')}</span>
-                <Link to="/applications">Applications</Link>
-                <Link to="/downloads">{c('Downloads', 'Téléchargements')}</Link>
-                <Link to="/about">{c('About the lab', 'Le laboratoire')}</Link>
-              </div>
-              <div>
-                <span>{c('Resources', 'Ressources')}</span>
-                <Link to="/docs">Documentation</Link>
-                <Link to="/support">Support</Link>
-                <Link to="/legal">{c('Legal & privacy', 'Droit et confidentialité')}</Link>
-              </div>
-              <div>
-                <span>{c('Stay connected', 'Restons connectés')}</span>
-                <a href={GITHUB}>
-                  GitHub <ArrowUpRight size={13} />
-                </a>
-                <p className="footer-note">{c('Our official channel.', 'Notre canal officiel.')}</p>
-              </div>
+            <div>
+              <span>{c('Downloads', 'Téléchargements')}</span>
+              <Link to="/downloads">{c('Latest releases', 'Dernières versions')}</Link>
+              <Link to="/docs?section=verification">
+                {c('Verify a file', 'Vérifier un fichier')}
+              </Link>
+              <a href={`${GITHUB}?tab=repositories`}>
+                {c('Repositories', 'Dépôts')} <ArrowUpRight size={12} />
+              </a>
+            </div>
+            <div>
+              <span>{c('Resources', 'Ressources')}</span>
+              <Link to="/docs">Documentation</Link>
+              <Link to="/support">{c('Support', 'Assistance')}</Link>
+              <a href={GITHUB}>
+                GitHub <ArrowUpRight size={12} />
+              </a>
+            </div>
+            <div>
+              <span>CPSI LABS</span>
+              <Link to="/about">{c('About', 'À propos')}</Link>
+              <Link to="/legal">{c('Legal & privacy', 'Droit et confidentialité')}</Link>
             </div>
           </div>
           <div className="footer-bottom">
-            <span>© {new Date().getFullYear()} CPSI LABS</span>
-            <span>
-              {c('Built with care. Made to evolve.', 'Conçu avec soin. Pensé pour évoluer.')}
+            <span className="footer-identity">
+              <Brand footer />
+              <span>© {new Date().getFullYear()} CPSI LABS · Build. Innovate. Evolve.</span>
             </span>
-            <Link to="/legal">
-              {c('Privacy, by intention.', 'La confidentialité, par choix.')}{' '}
-              <ArrowRight size={13} />
-            </Link>
+            <span className="footer-preferences">
+              <button
+                className="footer-language"
+                onClick={() => setLanguage(language === 'en' ? 'fr' : 'en')}
+                aria-label={
+                  language === 'en' ? 'Afficher le site en français' : 'View the site in English'
+                }
+              >
+                <span className={language === 'en' ? 'on' : ''}>English</span>
+                <span className={language === 'fr' ? 'on' : ''}>Français</span>
+              </button>
+              <button
+                className="icon-button"
+                onClick={toggleTheme}
+                aria-label={
+                  theme === 'dark'
+                    ? c('Use the light theme', 'Utiliser le thème clair')
+                    : c('Use the dark theme', 'Utiliser le thème sombre')
+                }
+              >
+                {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
+              </button>
+            </span>
           </div>
         </div>
       </footer>

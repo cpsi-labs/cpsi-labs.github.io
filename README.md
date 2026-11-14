@@ -1,6 +1,6 @@
 # CPSI LABS — Official website
 
-Official, bilingual software publishing website. **English and light theme by default**, complete French copy, persistent light/dark themes. Existing explicit theme preferences are preserved. Built with React, TypeScript, Vite, Tailwind CSS, Manrope and Lucide. No backend, user account, contact form, analytics or external font requests.
+Official, bilingual software publishing website. **English and light theme by default**, complete French copy, persistent light/dark themes. Existing explicit theme preferences are preserved. Built with React, TypeScript, Vite, Tailwind CSS, Geist and Lucide. No backend, user account, contact form, analytics or external font requests.
 
 ## Develop and build
 
@@ -25,11 +25,13 @@ Production output: `dist/`. The build checks TypeScript and validates the catalo
 - `src/lib/preferences.tsx`: language/theme state with safe local storage fallback.
 - `src/lib/links.ts`: official GitHub namespace and local asset guards.
 - `src/styles.css`: shared tokens, navigation, reading layouts and complete light/dark themes.
-- `src/styles/showcase.css`: full-width brand showcases, product presentations and responsive media frames.
+- `src/styles/home.css`: Apple-inspired home page (device stage, discipline tiles, catalogue template, under-the-hood band, process).
+- `src/styles/showcase.css`: product presentations and responsive media frames.
+- `public/brand/visuals/`: generated light-field imagery with provenance sidecars; regenerate with `scripts/visuals/silk.html` (URL parameters `w,h,seed,c0..c3,scale,ang,light`).
 - `src/components/ProductMedia.tsx`: real catalogue screenshots in explicit phone/desktop/browser frames, without cropping.
 - `src/components/Reveal.tsx`: finite scroll entrances, disabled and cancelled for reduced motion.
 - `scripts/validate-assets.ts`: build-time check that referenced catalogue images exist.
-- `public/brand/`: optimized owner-supplied CS mark, icons and social card. Original colors preserved. Provenance embedded or in adjacent sidecar.
+- `public/brand/`: optimized owner-supplied CS mark, wordmark (light/dark), icons and social card. Original colors preserved. Provenance embedded or in adjacent sidecar.
 - `PRODUCT.md`, `DESIGN.md`, `.impeccable/`: product and design guidance for future changes; not included in the production bundle.
 
 `HashRouter` allows direct links and refreshes on GitHub Pages without a server rewrite, for example `https://cpsi-labs.github.io/#/applications`. A single brand-level HTML metadata/social card is shared by the routes; hash routes do not have independently crawlable social previews. The sitemap lists the real HTML entry point only.

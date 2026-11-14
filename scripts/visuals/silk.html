@@ -1,0 +1,67 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>html,body{margin:0;background:#000;overflow:hidden}canvas{display:block}</style></head>
+<body><canvas id="c"></canvas>
+<script>
+// Procedural "silk" light-field renderer used to generate the mockup imagery.
+// Params: w,h,seed, c0..c3 (hex palette dark→light), scale, angle, light
+const q = new URLSearchParams(location.search);
+const W = +q.get('w') || 1600, H = +q.get('h') || 900;
+const cv = document.getElementById('c'); cv.width = W; cv.height = H;
+const gl = cv.getContext('webgl', { preserveDrawingBuffer: true, antialias: true });
+const hex = (s) => { s = s.replace('#', ''); return [0, 2, 4].map((i) => parseInt(s.slice(i, i + 2), 16) / 255); };
+const P = {
+  c0: hex(q.get('c0') || '050b18'), c1: hex(q.get('c1') || '0b2a6b'),
+  c2: hex(q.get('c2') || '1f6bff'), c3: hex(q.get('c3') || 'eaf2ff'),
+  seed: +q.get('seed') || 1, scale: +q.get('scale') || 1, ang: +q.get('ang') || 0.4,
+  light: +q.get('light') || 1, fold: +q.get('fold') || 1, bias: +q.get('bias') || 0,
+};
+const vs = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+const fs = `precision highp float;
+uniform vec2 R;uniform vec3 c0,c1,c2,c3;uniform float seed,scale,ang,light,fold,bias;
+float h(vec2 p){
+  float t=seed*1.7;
+  float ca=cos(ang),sa=sin(ang);
+  p=mat2(ca,-sa,sa,ca)*p;
+  vec2 q=p*scale;
+  float w=sin(q.x*1.3+t)*0.55+sin(q.y*2.1-t*0.7)*0.35;
+  q+=vec2(w*0.8*fold, sin(q.x*0.9+t*1.3)*0.6*fold);
+  float v=sin(q.x*2.2+q.y*0.6+t)*0.5;
+  v+=sin(q.x*0.7-q.y*1.9+t*0.4)*0.35;
+  v+=sin((q.x+q.y)*3.7+w*2.0)*0.12;
+  v+=sin(q.x*6.1-q.y*1.2+t*2.)*0.04;
+  float s=sin(q.x*1.6-q.y*0.8+w*1.5+t);
+  v-=sqrt(s*s+0.06)*0.35*fold;
+  return v;
+}
+void main(){
+  vec2 uv=(gl_FragCoord.xy-0.5*R)/R.y;
+  float e=1.5/R.y;
+  float v=h(uv);
+  vec3 n=normalize(vec3(h(uv-vec2(e,0.))-h(uv+vec2(e,0.)),h(uv-vec2(0.,e))-h(uv+vec2(0.,e)),e*1.6));
+  vec3 L=normalize(vec3(-0.5,0.7,0.6));
+  float dif=clamp(dot(n,L),0.,1.);
+  float spec=pow(clamp(dot(reflect(-L,n),vec3(0.,0.,1.)),0.,1.),24.)*light;
+  float k=clamp(dif*0.85+v*0.18+bias,0.,1.);
+  vec3 col=mix(c0,c1,smoothstep(0.0,0.45,k));
+  col=mix(col,c2,smoothstep(0.42,0.82,k));
+  col=mix(col,c3,smoothstep(0.80,1.0,k)*0.9);
+  col+=spec*mix(c2,c3,0.6)*0.55;
+  vec2 vu=gl_FragCoord.xy/R;
+  col*=mix(0.82,1.0,smoothstep(0.95,0.25,length(vu-0.5)));
+  float g=fract(sin(dot(gl_FragCoord.xy,vec2(12.9898,78.233)))*43758.5453);
+  col+=(g-0.5)*0.018;
+  gl_FragColor=vec4(col,1.);
+}`;
+function sh(t, s) { const o = gl.createShader(t); gl.shaderSource(o, s); gl.compileShader(o); if (!gl.getShaderParameter(o, gl.COMPILE_STATUS)) document.title = 'ERR ' + gl.getShaderInfoLog(o); return o; }
+const pr = gl.createProgram(); gl.attachShader(pr, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(pr, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(pr); gl.useProgram(pr);
+const b = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, b);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+const loc = gl.getAttribLocation(pr, 'p'); gl.enableVertexAttribArray(loc); gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+const U = (n) => gl.getUniformLocation(pr, n);
+gl.uniform2f(U('R'), W, H);
+['c0', 'c1', 'c2', 'c3'].forEach((k) => gl.uniform3fv(U(k), P[k]));
+['seed', 'scale', 'light', 'fold', 'bias'].forEach((k) => gl.uniform1f(U(k), P[k]));
+gl.uniform1f(U('ang'), P.ang);
+gl.viewport(0, 0, W, H); gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+if (!document.title) document.title = 'OK';
+</script></body></html>

@@ -15,3 +15,7 @@ These observations informed a distinct composition: the genuine CS monogram as t
 White is now the default. Dark mode has its own surfaces and retains a clear stage for the original navy/blue monogram. Explicitly saved preferences remain valid. Motion consists of a finite brand entrance, once-only scroll reveals and short control feedback; reduced-motion changes cancel active reveals. Content remains visible if observation or motion is unavailable.
 
 The software catalogue stays empty. Real product entries will activate benefits-first pages, genuine screenshots in explicitly selected device frames, compatibility details and official release downloads. Placeholder product images appear only in the isolated test fixture and are prominently marked as test material.
+
+## November 2026 — approved direction
+
+Three high-fidelity directions were mocked up (Apple-inspired, premium software studio, digital software store). The owner chose **Apple-inspired**. The previous monogram-led hero and geometric artwork were removed. The home page now uses the real catalogue and downloads pages inside generic device frames, discipline tiles with generated light-field imagery, a labelled catalogue template while no application is published, and an “Under the hood” band built from real verification, bilingual and privacy facts. Typography moved from Manrope to self-hosted Geist.
